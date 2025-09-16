@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人简历</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+            margin: 0;
+            padding: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            transition: all 0.3s ease;
+            animation: bounceIn 1s;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.1);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        h1:hover {
+            color: #007bff;
+            transform: scale(1.05);
+        }
+        
+        h2 {
+            color: darkblue;
+            /* 移除了 border-bottom: 1px solid darkblue; 这一行来消除虚线 */
+            padding-bottom: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            animation: slideInLeft 0.5s ease-out;
+        }
+        
+        h2:after {
+            content: '';
+            display: block;
+            width: 90%;
+            height: 2px;
+            background-color: darkblue;
+            margin-top: 5px;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        h2:hover {
+            color: #007bff;
+            transform: translateX(10px);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px 40px; /* 增加左右padding实现等边距 */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            animation: slideIn 0.5s ease-out;
+            /* 添加响应式网格容器 */
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* 基本信息部分使用弹性布局 */
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+        }
+        
+        /* 左侧信息列 */
+        .info-left {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* 右侧信息列 */
+        .info-right {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        /* 照片区 */
+        .photo-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: auto;
+        }
+        
+        pre {
+            font-family: inherit;
+            display: inline-block;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        pre:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-5px);
+        }
+        
+        /* 移除原有的表格样式 */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        td:nth-child(2) {
+            text-align: left;
+            padding-left: 50px;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            /* 移除了 border-bottom: 1px dotted black; 来消除虚线 */
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        ul, ol {
+            transition: all 0.3s ease;
+            /* 添加居中对齐和右边距 */
+            margin-right: 40px;
+        }
+        
+        ul:hover, ol:hover {
+            transform: translateX(5px);
+        }
+        
+        li {
+            transition: all 0.3s ease;
+            animation: fadeInLeft 0.5s;
+            /* 添加右边距 */
+            margin-right: 20px;
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        li:hover {
+            background-color: #f0f8ff;
+            transform: translateX(10px);
+        }
+        
+        img {
+            transition: all 0.3s ease;
+            animation: zoomIn 0.5s;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        @keyframes zoomIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+        
+        p {
+            animation: fadeIn 1s;
+            transition: all 0.3s ease;
+            /* 添加右边距 */
+            margin-right: 40px;
+        }
+        
+        p:hover {
+            background-color: #f0f8ff;
+            transform: translateX(10px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .info-section {
+                flex-direction: column;
+            }
+            
+            .photo-container {
+                position: relative;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center;">
+            <div style="display: inline-block; text-align: left;">
+                <h1 style="text-align: center;">个人简历</h1>
+                
+                <h2 style="margin-left: 30px;">基本信息</h2>
+
+                <div style="margin-left: 30px; position: relative;" class="info-section">
+                    <div class="info-left">
+                        <p>姓    名：X X</p>
+                        <p>民    族：X</p>
+                        <p>电    话：XXXXXXXXXXX</p>
+                        <p>邮    箱：XXXXXX@XXX.com</p>
+                    </div>
+                    <div class="info-right">
+                        <p>年    龄：X</p>
+                        <p>学    历：X</p>
+                        <p>专    业：X X X</p>
+                        <p>求职意向: X X X</p>
+                    </div>
+                    <div class="photo-container">
+                        <p>个人照片</p>
+                    </div>
+                </div>
+                <div style="margin-left: 30px; font-family: inherit;">
+                    <P><strong>自我总结：</strong></P>
+                    <ol>
+                        <li>具备良好的沟通能力和团队协作精神，能够快速适应新环境并承担工作压力；注重细节，追求卓越，在工作中始终保持高度的责任心和专业态度。</li>
+                        <li>熟悉软件开发流程，掌握多种编程语言和开发工具，能够独立完成模块设计与实现；具备较强的学习能力，能够快速掌握新技术并应用到实际项目中。</li>
+                    </ol>
+                </div>   
+                
+                <h2 style="margin-left: 30px;">教育背景</h2>
+
+                <div style="margin-left: 30px">
+                    <pre style="font-family:inherit">
+                    XXXX.XX-XXXX.XX                     X X X                       X X X专业
+                    </pre>
+                    <p><strong>主修课程：</strong>X X X、X X X、X X X、X X X、X X X、X X X、X X X、X X X</p>
+                </div>
+
+
+                <h2 style="margin-left: 30px;">实践经历</h2>
+
+                <div style="margin-left: 30px">   
+                    <pre style="font-family:inherit">
+                2020.03-2020.06                         在线教育平台开发项目      
+                    </pre>      
+                    <ul>     
+                        <li>参与基于Spring Boot和Vue.js的在线教育平台开发，负责用户认证模块设计与实现；</li>
+                        <li>使用MySQL数据库存储用户信息和课程数据，通过Redis缓存热点数据提升系统响应速度；</li>
+                        <li>协助团队完成系统测试和部署，优化系统性能，确保平台稳定运行。</li>
+                    </ul>
+                    
+                    <pre style="font-family:inherit">
+                2021.07-2021.09                    企业级电商系统安全测试
+                    </pre>
+                    <ul>
+                        <li>使用Burp Suite和OWASP ZAP对电商系统进行安全测试，发现并报告多个高危漏洞；</li>
+                        <li>编写详细的渗透测试报告，提供修复建议并协助开发团队进行漏洞修复；</li>
+                        <li>参与制定系统安全加固方案，提升整体安全防护能力。</li>
+                    </ul>
+                    
+                    <pre style="font-family:inherit">
+                2022.01-2022.04                    智能家居控制系统设计
+                    </pre>
+                    <ul>
+                        <li>基于物联网技术和Python开发智能家居控制系统，实现设备远程控制功能；</li>
+                        <li>设计用户友好的Web界面，支持多设备联动和场景模式设置；</li>
+                        <li>通过MQTT协议实现设备间通信，确保系统稳定性和响应速度。</li>
+                    </ul>
+                </div>
+
+
+                <h2 style="margin-left: 30px;">校园经历</h2>
+                
+                <div style="margin-left: 30px">
+                    <pre style="font-family:inherit">
+                    XXXX.XX-至今                          X X X X                         X X X/X X X
+                    </pre>
+                    <ul>
+                        <li>负责协调文字采编与摄影团队，确保内容与视觉素材匹配。</li>
+                        <li>审核与优化稿件质量，挑选并整理新闻图片。</li>
+                        <li>进行排版设计与美化，完成微信公众号等平台的内容发布。</li>
+                    </ul>
+                </div>
+
+                <h2 style="margin-left: 30px;">荣誉奖项</h2>
+
+                <div style="margin-left: 30px" class="award-section">
+                    <p>X X X X X X X｜XXXX</p>
+                    <p>X X X X X X X（省级三等奖）｜XXXX</p>
+                    <p>X X X"X X X+"</p>
+                    <p>X X X X X X X X X</p>
+                </div>
+           
+                <h2 style="margin-left: 30px;">技能专长</h2>
+
+                <div style="margin-left: 0px">
+                    <ol>
+                        <li>掌握 X、X、X 及前端开发技术，具备独立编程与页面开发能力。</li>
+                        <li>熟悉 X X全流程，能熟练使用 X X、X X、X X、X X等工具及各类安全设备。</li>
+                        <li>具备responsibility与学习能力，善于团队协作并能快速解决问题。</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer style="text-align: center; padding: 20px; background-color: #f0f8ff; margin-top: 20px; border-radius: 10px;">
+        <p>联系我: <a href="mailto:XXXXXX@XXX.com" style="color: #007bff;">XXXXXX@XXX.com</a> | 电话: XXXXXXXXXXX</p>
+        <p>&copy; XXXX X X. 保留所有权利.</p>
+    </footer>
+    
+    <script>
+        // 添加一些交互效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.container');
+            
+            // 点击容器时添加一个效果
+            container.addEventListener('click', function() {
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 300);
+            });
+            
+            // 为所有章节标题添加悬停效果
+            const headings = document.querySelectorAll('h2');
+            headings.forEach(heading => {
+                heading.addEventListener('mouseover', function() {
+                    this.style.transform = 'translateX(10px)';
+                });
+                
+                heading.addEventListener('mouseout', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+            
+            // 为列表添加悬停效果
+            const lists = document.querySelectorAll('ul, ol');
+            lists.forEach(list => {
+                list.addEventListener('mouseover', function() {
+                    this.style.backgroundColor = '#f8f9fa';
+                });
+                
+                list.addEventListener('mouseout', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
